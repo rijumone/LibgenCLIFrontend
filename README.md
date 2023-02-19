@@ -2,7 +2,7 @@
 
 React frontend wrapper over [Libgen](http://libgen.lc/).
 
-Borrowed some code from [Libgen-CLI](git@github.com:kriticalflare/Libgen-CLI.git). Thanks!
+Borrowed some code from [Libgen-CLI](https://github.com:kriticalflare/Libgen-CLI.git). Thanks!
 
 ## Demo
 [Here](http://get-books.zapto.org:5006/)
