@@ -8,7 +8,7 @@ CORS(app)
 
 
 @app.route('/')
-def hello_world():
+def main():
     searchterm = request.args.get('searchterm', None)
     logger.debug(f'searchterm: {searchterm}')
     if not searchterm:
