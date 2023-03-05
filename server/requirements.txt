@@ -4,3 +4,4 @@ loguru
 requests
 flask-cors
 html5lib
+retrying

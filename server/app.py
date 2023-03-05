@@ -1,3 +1,4 @@
+from traceback import format_exc
 from loguru import logger
 from flask import Flask, request
 from flask_cors import CORS
@@ -17,4 +18,5 @@ def main():
         return search_title(searchterm)
     except Exception as _e:
         logger.critical(str(_e))
-        return []
+        logger.critical(str(format_exc()))
+        return {'status': 'error'}

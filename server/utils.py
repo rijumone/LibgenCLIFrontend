@@ -2,6 +2,7 @@
 from concurrent.futures import ThreadPoolExecutor
 from loguru import logger
 import requests
+from retrying import retry
 from bs4 import BeautifulSoup
 
 
@@ -11,8 +12,30 @@ class Book:
         self.mirror_list = []
 
 
+def check_status(response):
+    logger.debug(response.status_code)
+    return response.status_code != 200
+
+def check_exc(exception):
+    logger.warning(exception)
+    return isinstance(exception, requests.exceptions.ConnectionError)
+
+@retry(
+    retry_on_exception=check_exc,
+    retry_on_result=check_status,
+    wrap_exception=True,
+    stop_max_attempt_number=3,
+    # wait_random_min=500, wait_random_max=1500,
+)
+def perform_request(searchterm):
+    params = {'req': searchterm}
+    logger.debug(params)
+    return requests.get('http://gen.lib.rus.ec/', params=params)
+
+
 def search_title(searchterm):
-    result = requests.get('http://gen.lib.rus.ec/', params={'req': searchterm})
+    result = perform_request(searchterm)
+    # import pdb;pdb.set_trace()
     if result.status_code != 200:
         raise ValueError(f'result.status_code: {result.status_code}')
     source = result.content
