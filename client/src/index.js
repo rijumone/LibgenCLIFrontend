@@ -25,6 +25,7 @@ class SearchBox extends React.Component {
     event.preventDefault();
     console.log(this.input.value);
     fetch("http://albumart-gen.hopto.org:5005?searchterm=" + this.input.value, {
+    // fetch("http://localhost:5000?searchterm=" + this.input.value, {
       method: "GET",
       // body: formData
     })

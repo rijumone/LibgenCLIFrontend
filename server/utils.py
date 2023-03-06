@@ -5,6 +5,8 @@ import requests
 from retrying import retry
 from bs4 import BeautifulSoup
 
+# MAIN_SEARCH_URL = 'http://gen.lib.rus.ec/'
+MAIN_SEARCH_URL = 'https://libgen.is/search.php'
 
 class Book:
     def __init__(self):
@@ -30,7 +32,7 @@ def check_exc(exception):
 def perform_request(searchterm):
     params = {'req': searchterm}
     logger.debug(params)
-    return requests.get('http://gen.lib.rus.ec/', params=params)
+    return requests.get(MAIN_SEARCH_URL, params=params)
 
 
 def search_title(searchterm):
@@ -74,11 +76,12 @@ def search_title(searchterm):
             # books.append(book)
 
     # fetch actual links via in a multithreaded operation
+    # logger.info(raw_json)
     links_dct = {}
     for search_result in raw_json:
         for mirror in search_result['mirror_list']:
             links_dct[mirror] = None
-
+    logger.debug(links_dct)
     actual_links = []
 
     with ThreadPoolExecutor() as executor:
@@ -86,6 +89,7 @@ def search_title(searchterm):
             actual_links.append(executor.submit(
                 get_actual_download_link, source_link))
     result_list = [s_l.result() for s_l in actual_links]
+    result_list = [_ for _ in result_list if _]
     # print(result_list)
     _ctr = 0
     for index, search_result in enumerate(raw_json):
@@ -98,12 +102,15 @@ def search_title(searchterm):
 
 def get_actual_download_link(page_link):
     logger.debug(page_link)
-    res = requests.get(page_link)
+    res = requests.get(page_link, allow_redirects=True)
     # import pdb;pdb.set_trace()
     soup = BeautifulSoup(res.text, 'html5lib')
-    selector = '#maintable > tbody > tr:nth-child(1) > td:nth-child(2) > a'
+    selector = 'a'
     logger.debug(soup.select(selector))
-    url_suffix_params = soup.select(selector)[0].get('href')
+    try:
+        url_suffix_params = [u.get('href') for u in soup.select(selector) if 'key' in u.get('href')][0]
+    except IndexError:
+        return None
     return '/'.join(page_link.split('/')[:-1]) + f'/{url_suffix_params}'
 
 
