@@ -31,13 +31,15 @@ class SearchBox extends React.Component {
     this.state = {
       data: null,
       loading: false,
+      searchterm: '',
     };
   }
   handleSubmit = (event) => {
     event.preventDefault();
     this.setState({ ...this.state.data, loading: true }) // spread? Like python **args
-    console.log(this.input.value);
-    fetch("http://albumart-gen.hopto.org:5005?searchterm=" + this.input.value, {
+    // console.log(this.input.value);
+    console.log(this.state.searchterm);
+    fetch("http://albumart-gen.hopto.org:5005?searchterm=" + this.state.searchterm, {
     // fetch("http://localhost:5000?searchterm=" + this.input.value, {
       method: "GET",
       // body: formData
@@ -50,8 +52,9 @@ class SearchBox extends React.Component {
       <center>
         <form onSubmit={this.handleSubmit}>
           <Tooltip title="Enter fully or in part" arrow placement="left">
-            {/* <TextField variant="standard" label="Title or author" ref={(input) => (this.input = input)} /> */}
-            <input type="text" ref={(input) => (this.input = input)} />
+            <TextField variant="standard" label="Title or author" onChange={(e) => (this.setState({ ...this.state.data, searchterm: e.target.value }))} />
+            {/* <input type="text" ref={(input) => (this.input = input)} /> */}
+            {/* ref is actually like state, generally used to reference a DOM element */}
           </Tooltip>
           <Button variant="contained" type="submit">Search</Button>
           <span>{ this.state.loading ? 'loading...' : ''}</span>
