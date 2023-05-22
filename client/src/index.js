@@ -11,6 +11,9 @@ import TableRow from '@mui/material/TableRow'
 import TableBody from '@mui/material/TableBody'
 import Backdrop from '@mui/material/Backdrop'
 import CircularProgress from '@mui/material/CircularProgress'
+import Container from '@mui/material/Container'
+import Stack from '@mui/material/Stack';
+
 
 import ReactDOM from "react-dom/client";
 import "./index.css";
@@ -51,47 +54,49 @@ class SearchBox extends React.Component {
   };
   render() {
     return (
-      <center>
-        <form onSubmit={this.handleSubmit}>
-          <Tooltip title="Enter fully or in part" arrow placement="left">
-            <TextField variant="standard" label="Title or author" onChange={(e) => (this.setState({ ...this.state.data, searchterm: e.target.value }))} />
-            {/* <input type="text" ref={(input) => (this.input = input)} /> */}
-            {/* ref is actually like state, generally used to reference a DOM element */}
-          </Tooltip>
-          <Button variant="contained" type="submit">Search</Button>
-          <Backdrop
-            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-            open={this.state.loading}
-            // onClick={handleClose}
-          >
-            <CircularProgress color="inherit" />
-          </Backdrop>
-        </form>
-        {this.state.data && (
-          <TableContainer
-          // component={Paper} 
-          variant="outlined"
-          >
-              <Table aria-label="demo table">
-              <TableHead><TableRow>
-              <TableCell>Title</TableCell><TableCell>Download link</TableCell>
-              </TableRow></TableHead>
-              <TableBody>
-                {this.state.data.map((book) => (
-                  <TableRow key={book.title}>
-                    <TableCell>{book.title}</TableCell>
-                    <TableCell>
-                      <a href={book.mirror_list} rel="noreferrer" target="_blank">
-                        {book.mirror_list}
-                      </a>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        )}
-      </center>
+      <Container maxWidth="lg">
+        <Stack spacing={2}>
+          <form onSubmit={this.handleSubmit}>
+            <Tooltip title="Enter fully or in part" arrow placement="left">
+              <TextField variant="standard" label="Title or author" onChange={(e) => (this.setState({ ...this.state.data, searchterm: e.target.value }))} />
+              {/* <input type="text" ref={(input) => (this.input = input)} /> */}
+              {/* ref is actually like state, generally used to reference a DOM element */}
+            </Tooltip>
+            <Button variant="contained" type="submit">Search</Button>
+            <Backdrop
+              sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+              open={this.state.loading}
+              // onClick={handleClose}
+            >
+              <CircularProgress color="inherit" />
+            </Backdrop>
+          </form>
+          {this.state.data && (
+            <TableContainer
+            // component={Paper} 
+            variant="outlined"
+            >
+                <Table aria-label="demo table">
+                <TableHead><TableRow>
+                <TableCell>Title</TableCell><TableCell>Download link</TableCell>
+                </TableRow></TableHead>
+                <TableBody>
+                  {this.state.data.map((book) => (
+                    <TableRow key={book.title}>
+                      <TableCell>{book.title}</TableCell>
+                      <TableCell>
+                        <a href={book.mirror_list} rel="noreferrer" target="_blank">
+                          {book.mirror_list}
+                        </a>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
+        </Stack>
+      </Container>
     );
   }
 }
