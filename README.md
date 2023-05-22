@@ -18,20 +18,26 @@ Barebones UI which will submit a form with a search term and render a table with
 
 ## TODO:
 ### Frontend
-- [ ] Import a modern UI library. e.g. [MUI](https://mui.com/).
+- [x] Import a modern UI library. e.g. [MUI](https://mui.com/).
 
-- [ ] Show a loader when the form is submitted, hide it when the call completes, both success and failure.
+- [x] Show a loader when the form is submitted, hide it when the call completes, both success and failure.
+
+- [ ] Improve the UI of the above loader.
 
 - [ ] Disable form when one request is ongoing.
 
 - [ ] Show an error message for failure.
 
+- [ ] Add support for filters and parameters
+
 ### Backend
-- [ ] Additional DEBUG logs.
+- [x] Additional DEBUG logs.
 
-- [ ] Return partial data where possible.
+- [x] Return partial data where possible.
 
-- [ ] Improve performance to reduce time taken per request.
+- [x] Improve performance to reduce time taken per request.
+
+- [ ] Add support for filters and parameters
 
 ## General
 - [ ] Add production deployment implementation
