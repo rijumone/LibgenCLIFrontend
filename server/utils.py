@@ -81,7 +81,7 @@ def search_title(searchterm):
     for search_result in raw_json:
         for mirror in search_result['mirror_list']:
             links_dct[mirror] = None
-    logger.debug(links_dct)
+    # logger.debug(links_dct)
     actual_links = []
 
     with ThreadPoolExecutor() as executor:
@@ -106,7 +106,7 @@ def get_actual_download_link(page_link):
     # import pdb;pdb.set_trace()
     soup = BeautifulSoup(res.text, 'html5lib')
     selector = 'a'
-    logger.debug(soup.select(selector))
+    # logger.debug(soup.select(selector))
     try:
         url_suffix_params = [u.get('href') for u in soup.select(selector) if 'key' in u.get('href')][0]
     except IndexError:
