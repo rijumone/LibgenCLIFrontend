@@ -22,7 +22,7 @@ Barebones UI which will submit a form with a search term and render a table with
 
 - [x] Show a loader when the form is submitted, hide it when the call completes, both success and failure.
 
-- [ ] Improve the UI of the above loader.
+- [x] Improve the UI of the above loader.
 
 - [ ] Disable form when one request is ongoing.
 

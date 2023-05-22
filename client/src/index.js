@@ -9,6 +9,8 @@ import TableHead from '@mui/material/TableHead'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 import TableBody from '@mui/material/TableBody'
+import Backdrop from '@mui/material/Backdrop'
+import CircularProgress from '@mui/material/CircularProgress'
 
 import ReactDOM from "react-dom/client";
 import "./index.css";
@@ -57,7 +59,13 @@ class SearchBox extends React.Component {
             {/* ref is actually like state, generally used to reference a DOM element */}
           </Tooltip>
           <Button variant="contained" type="submit">Search</Button>
-          <span>{ this.state.loading ? 'loading...' : ''}</span>
+          <Backdrop
+            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={this.state.loading}
+            // onClick={handleClose}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
         </form>
         {this.state.data && (
           <TableContainer
