@@ -24,7 +24,7 @@ Barebones UI which will submit a form with a search term and render a table with
 
 - [x] Improve the UI of the above loader.
 
-- [ ] Disable form when one request is ongoing.
+- [ ] ~~Disable form when one request is ongoing.~~
 
 - [ ] Show an error message for failure.
 
